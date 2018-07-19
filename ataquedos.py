@@ -101,7 +101,7 @@ class httpPost(Thread):
  
 def usage():
     print "./ataquedos.py -t <URL> [-r <threads> -p <port> -T -h]"
-    print " -t|--URL <Ejemplo: http://google.com>"
+    print " -t|--target <Ejemplo: http://google.com>"
     print " -r|--POST emulaciones <Numero de emulaciones> Por defecto son: 256"
     print " -p|--port <Puerto del Servidor> Por defecto es: 80"
     print " -T|--tor Enable tunneling via TOR on 127.0.0.1:9050"
@@ -124,16 +124,16 @@ def main(argv):
     port = 80
 
     for o, a in opts:
-        if o in ("-h", "--ayuda"):
+        if o in ("-h", "--help"):
             usage()
             sys.exit(0)
         if o in ("-T", "--tor"):
             tor = True
         elif o in ("-t", "--target"):
             target = a
-        elif o in ("-r", "--hilos"):
+        elif o in ("-r", "--threads"):
             threads = int(a)
-        elif o in ("-p", "--puerto"):
+        elif o in ("-p", "--port"):
             port = int(a)
 
     if target == '' or int(threads) <= 0:
@@ -141,8 +141,8 @@ def main(argv):
         sys.exit(-1)
 
     print term.DOWN + term.RED + "/*" + term.NORMAL
-    print term.RED + " * URL: %s Puertos: %d" % (target, port) + term.NORMAL
-    print term.RED + " * Hilos: %d Tor: %s" % (threads, tor) + term.NORMAL
+    print term.RED + " * target: %s ports: %d" % (target, port) + term.NORMAL
+    print term.RED + " * thread: %d Tor: %s" % (threads, tor) + term.NORMAL
     print term.RED + " * Espera de 20 a 40 segundos y revisa el sitio." + term.NORMAL
     print term.RED + " */" + term.DOWN + term.DOWN + term.NORMAL
 
@@ -163,7 +163,7 @@ def main(argv):
 
 if __name__ == "__main__":
     print "\n/*"
-    print " *"+term.RED + " AtaqueDoS v2.8.54.9 "+term.NORMAL
+    print " *"+term.RED + " AtaqueDoS v2.8.54.10 "+term.NORMAL
     print " * Slow HTTP POST Server Load Testing Tool"
     print " * por el programador Andres Nestor Ochoa Navas"
     print " * No me hago responsable por el uso que le des a esta arma cibernetica."
